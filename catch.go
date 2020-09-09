@@ -193,7 +193,7 @@ func (c *CatchStrut) StartGC(interval int) error {
 	c.TimeInterval = time.Duration(interval) * time.Second
 	go func() {
 		c.dataLock.RLock()
-		c.dataLock.RUnlock()
+		defer c.dataLock.RUnlock()
 		for {
 			<-time.After(c.TimeInterval) //防止协程堵塞
 			if c.item == nil {
